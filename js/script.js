@@ -1,146 +1,148 @@
-var map;    // declares a global map variable
+
+var map;
+var markers = [];
 
 
-/*
-Start here! initializeMap() is called when page is loaded.
-*/
-function initializeMap() {
+function initMap() {
 
-  var locations;
+ 
+$("#menu-toggle").click(function(e) {
+    e.preventDefault();
+$("#wrapper").toggleClass("toggled");
 
-  var mapOptions = {
-    disableDefaultUI: true
-  };
+});
 
 
-  /*
-  For the map to be displayed, the googleMap var must be
-  appended to #mapDiv in resumeBuilder.js.
-  */
-  map = new google.maps.Map(document.querySelector('#map'), mapOptions);
+  map = new google.maps.Map(document.getElementById('map'),{
+    center: {lat: 40.7613779, lng: -73.9346765},
+    zoom: 13,
+    
+    mapTypeControl: false
+  });
+
+  var locations = [
+   {title: 'Berry Park', location: {lat: 40.7224718, lng: -73.9552525}},
+   {title: 'Zablozkis', location: {lat: 40.7185273, lng: -73.9598372}},
+   {title: 'Turkeys Nest', location: {lat: 40.7206154, lng: -73.95501349999999}},
+   {title: 'Kent Ale House', location: {lat: 40.7223271, lng: -73.9592555}},
+   {title: 'The Levee', location:  {lat: 40.7163006, lng: -73.96168489999999}},
+   {title: 'Maison Premier', location:  {lat: 40.7142634, lng: -73.9616503}},
+   {title: 'St Mazie Bar', location:  {lat: 40.7125938, lng: -73.9558236}},
+   {title: 'Soft Spot', location: {lat: 40.71943110000001, lng: -73.9562275}},
+   {title: 'East River Bar', location: {lat: 40.7109477, lng: -73.96464999999999}}
+   ];
+
+   var largeInfowindow = new google.maps.InfoWindow();
 
 
-  /*
-  locationFinder() returns an array of every location string from the JSONs
-  written for bio, education, and work.
-  */
-  function locationFinder() {
+  function showList() {
+    for (var i = 0; i < locations.length; i ++) {
+      var homeListing = document.createElement('li');
+      var createList = document.getElementById('list');
+      var l = document.createTextNode(locations[i].title);
 
-    // initializes an empty array
-    var locations = [];
+      homeListing.appendChild(l);
 
-    // adds the single location property from bio to the locations array
-    locations.push(bio.contacts.location);
-
-    // iterates through school locations and appends each location to
-    // the locations array. Note that forEach is used for array iteration
-    // as described in the Udacity FEND Style Guide:
-    // https://udacity.github.io/frontend-nanodegree-styleguide/javascript.html#for-in-loop
-    education.schools.forEach(function(school){
-      locations.push(school.location);
-    });
-
-    // iterates through work locations and appends each location to
-    // the locations array. Note that forEach is used for array iteration
-    // as described in the Udacity FEND Style Guide:
-    // https://udacity.github.io/frontend-nanodegree-styleguide/javascript.html#for-in-loop
-    work.jobs.forEach(function(job){
-      locations.push(job.location);
-    });
-
-    return locations;
-  }
-
-  /*
-  createMapMarker(placeData) reads Google Places search results to create map pins.
-  placeData is the object returned from search results containing information
-  about a single location.
-  */
-  function createMapMarker(placeData) {
-
-    // The next lines save location data from the search result object to local variables
-    var lat = placeData.geometry.location.lat();  // latitude from the place service
-    var lon = placeData.geometry.location.lng();  // longitude from the place service
-    var name = placeData.formatted_address;   // name of the place from the place service
-    var bounds = window.mapBounds;            // current boundaries of the map window
-
-    // marker is an object with additional data about the pin for a single location
-    var marker = new google.maps.Marker({
-      map: map,
-      position: placeData.geometry.location,
-      title: name
-    });
-
-    // infoWindows are the little helper windows that open when you click
-    // or hover over a pin on a map. They usually contain more information
-    // about a location.
-    var infoWindow = new google.maps.InfoWindow({
-      content: name
-    });
-
-    // hmmmm, I wonder what this is about...
-    google.maps.event.addListener(marker, 'click', function() {
-      // your code goes here!
-    });
-
-    // this is where the pin actually gets added to the map.
-    // bounds.extend() takes in a map location object
-    bounds.extend(new google.maps.LatLng(lat, lon));
-    // fit the map to the new marker
-    map.fitBounds(bounds);
-    // center the map
-    map.setCenter(bounds.getCenter());
-  }
-
-  /*
-  callback(results, status) makes sure the search returned results for a location.
-  If so, it creates a new map marker for that location.
-  */
-  function callback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      createMapMarker(results[0]);
+      createList.appendChild(homeListing);
     }
+
+
   }
+  showList();
 
-  /*
-  pinPoster(locations) takes in the array of locations created by locationFinder()
-  and fires off Google place searches for each location
-  */
-  function pinPoster(locations) {
 
-    // creates a Google place search service object. PlacesService does the work of
-    // actually searching for location data.
-    var service = new google.maps.places.PlacesService(map);
+   var bounds = new google.maps.LatLngBounds();
 
-    // Iterates through the array of locations, creates a search object for each location
-      locations.forEach(function(place){
-      // the search request object
-      var request = {
-        query: place
-      };
+  
 
-      // Actually searches the Google Maps API for location data and runs the callback
-      // function with the search results after each search.
-      service.textSearch(request, callback);
+   for (var i = 0; i < locations.length; i++) {
+
+    var position = locations[i].location;
+    var title = locations[i].title;
+
+    var marker = new google.maps.Marker({
+    
+    position: position,
+    title: title,
+    animation: google.maps.Animation.DROP,
+    id: i
+    });
+
+    markers.push(marker);
+    bounds.extend(marker.position);
+
+    marker.addListener('click', function() {
+      populateInfoWindow(this, largeInfowindow);
+
     });
   }
+  
+    
+    //document.getElementById('show-listings').addEventListener('click', showListings);
+   // document.getElementById('hide-listings').addEventListener('click', hideListings);
+   // document.getElementById('zoom-to-area').addEventListener('click', function() {
+    //  zoomToArea();
+    //});
+    
 
-  // Sets the boundaries of the map based on pin locations
-  window.mapBounds = new google.maps.LatLngBounds();
+showListings();
 
-  // locations is an array of location strings returned from locationFinder()
-  locations = locationFinder();
 
-  // pinPoster(locations) creates pins on the map for each location in
-  // the locations array
-  pinPoster(locations);
 
 }
 
 
-window.addEventListener('load', initializeMap);
+function populateInfoWindow(marker, infowindow) {
+  if (infowindow.marker != marker) {
+    infowindow.marker = marker;
+    infowindow.setContent('<div>' + marker.title + '</div>');
+    infowindow.open(map, marker);
+    //infowindow.addListener('closeclick', function() {
+      //infowindow.setMarker(null);
+      
+    //});
+  }
+}
 
-window.addEventListener('resize', function(e) {
+function showListings() {
+  var bounds = new google.maps.LatLngBounds();
 
-map.fitBounds(mapBounds);
-});
+  for (i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+    bounds.extend(markers[i].position);
+  }
+  map.fitBounds(bounds);
+}
+
+
+  
+  function hideListings() {
+    for (i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    }
+  }
+
+
+
+
+function zoomToArea() {
+  var geocoder = new google.maps.Geocoder();
+
+  var address = document.getElementById('zoom-to-area-text').value;
+
+  if (address == '') {
+    window.alert('You must enter an area, or address.');
+  } else {
+    geocoder.geocode(
+      { address: address
+        //componentRestrictions: {locality: 'New York'}
+      }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          map.setCenter(results[0].geometry.location);
+          map.setZoom(15);
+        } else {
+          window.alert('We could not find that location - try entering a more specific place');
+        }
+      });
+    }
+  }
