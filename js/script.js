@@ -3,12 +3,50 @@ var map;
 var markers = [];
 
 
-function initMap() {
+
+
+  var initialBars = [
+   {title: 'Berry Park', location: {lat: 40.7224718, lng: -73.9552525}},
+   {title: 'Zablozkis', location: {lat: 40.7185273, lng: -73.9598372}},
+   {title: 'Turkeys Nest', location: {lat: 40.7206154, lng: -73.95501349999999}},
+   {title: 'Kent Ale House', location: {lat: 40.7223271, lng: -73.9592555}},
+   {title: 'The Levee', location: {lat: 40.7163006, lng: -73.96168489999999}},
+   {title: 'Maison Premier', location: {lat: 40.7142634, lng: -73.9616503}},
+   {title: 'St Mazie Bar', location: {lat: 40.7125938, lng: -73.9558236}},
+   {title: 'Soft Spot', location: {lat: 40.71943110000001, lng: -73.9562275}},
+   {title: 'East River Bar', location: {lat: 40.7109477, lng: -73.96464999999999}}
+   ];
+
+
+var Bar = function(data) {
+  this.title = ko.observable(data.title);
+}
+
+
+var ViewModel = function() {
+  var self = this;
+
+  self.barList = ko.observableArray ([]);
+
+  initialBars.forEach(function(barItem) {
+    self.barList.push ( new Bar(barItem) );
+  });
+
+  this.currentBar = ko.observable(this.barList() [0]);
+  this.barClick = function(bar) {
+  
+      google.maps.event.trigger(marker, 'click');
+    }
+
+
 
  
-$("#menu-toggle").click(function(e) {
+
+
+
+  $("#menu-toggle").click(function(e) {
     e.preventDefault();
-$("#wrapper").toggleClass("toggled");
+  $("#wrapper").toggleClass("toggled");
 
 });
 
@@ -20,45 +58,15 @@ $("#wrapper").toggleClass("toggled");
     mapTypeControl: false
   });
 
-  var locations = [
-   {title: 'Berry Park', location: {lat: 40.7224718, lng: -73.9552525}},
-   {title: 'Zablozkis', location: {lat: 40.7185273, lng: -73.9598372}},
-   {title: 'Turkeys Nest', location: {lat: 40.7206154, lng: -73.95501349999999}},
-   {title: 'Kent Ale House', location: {lat: 40.7223271, lng: -73.9592555}},
-   {title: 'The Levee', location:  {lat: 40.7163006, lng: -73.96168489999999}},
-   {title: 'Maison Premier', location:  {lat: 40.7142634, lng: -73.9616503}},
-   {title: 'St Mazie Bar', location:  {lat: 40.7125938, lng: -73.9558236}},
-   {title: 'Soft Spot', location: {lat: 40.71943110000001, lng: -73.9562275}},
-   {title: 'East River Bar', location: {lat: 40.7109477, lng: -73.96464999999999}}
-   ];
 
    var largeInfowindow = new google.maps.InfoWindow();
 
-
-  function showList() {
-    for (var i = 0; i < locations.length; i ++) {
-      var homeListing = document.createElement('li');
-      var createList = document.getElementById('list');
-      var l = document.createTextNode(locations[i].title);
-
-      homeListing.appendChild(l);
-
-      createList.appendChild(homeListing);
-    }
-
-
-  }
-  showList();
-
-
    var bounds = new google.maps.LatLngBounds();
 
-  
+   for (var i = 0; i < initialBars.length; i++) {
 
-   for (var i = 0; i < locations.length; i++) {
-
-    var position = locations[i].location;
-    var title = locations[i].title;
+    var position = initialBars[i].location;
+    var title = initialBars[i].title;
 
     var marker = new google.maps.Marker({
     
@@ -88,9 +96,13 @@ $("#wrapper").toggleClass("toggled");
 showListings();
 
 
-
 }
 
+function initApp() {
+var viewModel = new ViewModel();
+ko.applyBindings(viewModel);
+
+}
 
 function populateInfoWindow(marker, infowindow) {
   if (infowindow.marker != marker) {
@@ -121,7 +133,6 @@ function showListings() {
       markers[i].setMap(null);
     }
   }
-
 
 
 
