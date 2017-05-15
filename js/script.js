@@ -3,8 +3,6 @@ var map;
 var markers = [];
 
 
-
-
   var initialBars = [
    {title: 'Berry Park', location: {lat: 40.7224718, lng: -73.9552525}},
    {title: 'Zablozkis', location: {lat: 40.7185273, lng: -73.9598372}},
@@ -33,9 +31,11 @@ var ViewModel = function() {
   });
 
   this.currentBar = ko.observable(this.barList() [0]);
+
   this.barClick = function(bar) {
-  
-      google.maps.event.trigger(marker, 'click');
+  self.currentBar(bar);
+
+      google.maps.event.trigger(bar.marker, 'click');
     }
 
 
@@ -76,6 +76,7 @@ var ViewModel = function() {
     id: i
     });
 
+    self.barList()[i].marker = marker;
     markers.push(marker);
     bounds.extend(marker.position);
 
