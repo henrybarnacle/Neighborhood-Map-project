@@ -18,17 +18,27 @@ var markers = [];
 
 var Bar = function(data) {
   this.title = ko.observable(data.title);
+  this.marker = new google.maps.Marker;
 }
 
 
 var ViewModel = function() {
   var self = this;
 
-  self.barList = ko.observableArray ([]);
+  
+
+  this.barList = ko.observableArray ([]);
 
   initialBars.forEach(function(barItem) {
+
     self.barList.push ( new Bar(barItem) );
   });
+
+  self.barList().forEach(function(myItem) {
+    
+      var marker = new google.maps.Marker
+      myItem.marker = marker;
+  })
 
   this.currentBar = ko.observable(this.barList() [0]);
 
@@ -38,10 +48,31 @@ var ViewModel = function() {
       google.maps.event.trigger(bar.marker, 'click');
     }
 
+  this.filter = ko.observable("");
+  
+  this.barListMatch = ko.computed(function(){
+    var filter = self.filter().toLowerCase();
 
+    if (!filter) {
+      return self.barList();
+    } else { 
+      return ko.utils.arrayFilter(self.barList(), function(item) {
+        return item.title().toLowerCase().indexOf(filter) != -1;
+        item.marker.setVisible(visible);
+      });
+    }
+  });
+      
+  /*self.barList().forEach(function(barItem) {
+    var marker = new google.maps.Marker({
+      title: barItem.title,
+      position: barItem.location,
+      map: map
 
- 
-
+    });
+    barItem.marker = marker;
+  })*/
+  
 
 
   $("#menu-toggle").click(function(e) {
@@ -76,7 +107,7 @@ var ViewModel = function() {
     id: i
     });
 
-    self.barList()[i].marker = marker;
+    self.barListMatch()[i].marker = marker;
     markers.push(marker);
     bounds.extend(marker.position);
 
@@ -99,11 +130,14 @@ showListings();
 
 }
 
+ 
+
 function initApp() {
 var viewModel = new ViewModel();
 ko.applyBindings(viewModel);
 
 }
+
 
 function populateInfoWindow(marker, infowindow) {
   if (infowindow.marker != marker) {

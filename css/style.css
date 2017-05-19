@@ -1,5 +1,6 @@
 .white {
   color: #fff;
+  cursor: pointer;
 }
 #map,
 #wrapper,
@@ -178,6 +179,12 @@
 }
 #search-within-time-text {
     width: 84%;
+}
+.searchBox {
+text-align: center;
+align-self: center;
+width: 60%;
+margin: 20px;
 }
 
 #zoom-to-area {
