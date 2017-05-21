@@ -18,27 +18,20 @@ var markers = [];
 
 var Bar = function(data) {
   this.title = ko.observable(data.title);
-  this.marker = new google.maps.Marker;
+  
 }
 
 
 var ViewModel = function() {
   var self = this;
-
   
-
-  this.barList = ko.observableArray ([]);
+  self.barList = ko.observableArray ([]);
 
   initialBars.forEach(function(barItem) {
 
     self.barList.push ( new Bar(barItem) );
   });
 
-  self.barList().forEach(function(myItem) {
-    
-      var marker = new google.maps.Marker
-      myItem.marker = marker;
-  })
 
   this.currentBar = ko.observable(this.barList() [0]);
 
@@ -48,31 +41,40 @@ var ViewModel = function() {
       google.maps.event.trigger(bar.marker, 'click');
     }
 
-  this.filter = ko.observable("");
+  self.filter = ko.observable("");
   
+
+
   this.barListMatch = ko.computed(function(){
+
     var filter = self.filter().toLowerCase();
 
-    if (!filter) {
+    for (var i = 0; i < self.barList.length; i++) {
+      self.barList()[i].marker.setVisible(true);
+    }
+
+    if (!filter || filter == '') {
       return self.barList();
-    } else { 
+        for (var i = 0; i < self.barList.length; i++) {
+      self.barList()[i].marker.setVisible(true);
+    }
+
+
+
+    } else {
+
       return ko.utils.arrayFilter(self.barList(), function(item) {
-        return item.title().toLowerCase().indexOf(filter) != -1;
-        item.marker.setVisible(visible);
+
+     var match = item.title().toLowerCase().indexOf(filter) != -1;
+
+      item.marker.setVisible(match);
+      return match; 
+
+            
       });
     }
-  });
-      
-  /*self.barList().forEach(function(barItem) {
-    var marker = new google.maps.Marker({
-      title: barItem.title,
-      position: barItem.location,
-      map: map
 
-    });
-    barItem.marker = marker;
-  })*/
-  
+  });
 
 
   $("#menu-toggle").click(function(e) {
@@ -105,9 +107,14 @@ var ViewModel = function() {
     title: title,
     animation: google.maps.Animation.DROP,
     id: i
+
     });
 
-    self.barListMatch()[i].marker = marker;
+
+    self.barList()[i].marker = marker;
+   
+   
+    
     markers.push(marker);
     bounds.extend(marker.position);
 
@@ -124,20 +131,6 @@ var ViewModel = function() {
     //  zoomToArea();
     //});
     
-
-showListings();
-
-
-}
-
- 
-
-function initApp() {
-var viewModel = new ViewModel();
-ko.applyBindings(viewModel);
-
-}
-
 
 function populateInfoWindow(marker, infowindow) {
   if (infowindow.marker != marker) {
@@ -161,34 +154,20 @@ function showListings() {
   map.fitBounds(bounds);
 }
 
+showListings();
+
+
+}
+
+ 
+
+function initApp() {
+var viewModel = new ViewModel();
+ko.applyBindings(viewModel);
+
+}
+
+
 
   
-  function hideListings() {
-    for (i = 0; i < markers.length; i++) {
-      markers[i].setMap(null);
-    }
-  }
 
-
-
-function zoomToArea() {
-  var geocoder = new google.maps.Geocoder();
-
-  var address = document.getElementById('zoom-to-area-text').value;
-
-  if (address == '') {
-    window.alert('You must enter an area, or address.');
-  } else {
-    geocoder.geocode(
-      { address: address
-        //componentRestrictions: {locality: 'New York'}
-      }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          map.setCenter(results[0].geometry.location);
-          map.setZoom(15);
-        } else {
-          window.alert('We could not find that location - try entering a more specific place');
-        }
-      });
-    }
-  }
