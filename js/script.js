@@ -49,17 +49,16 @@ var ViewModel = function() {
 
     var filter = self.filter().toLowerCase();
 
-    for (var i = 0; i < self.barList.length; i++) {
-      self.barList()[i].marker.setVisible(true);
+    for (var i = 0; i < self.barList().length; i++) {
+      if (self.barList()[i].marker) {
+        self.barList()[i].marker.setVisible(true);
+
+      }
+
     }
 
-    if (!filter || filter == '') {
+    if (!filter) {
       return self.barList();
-        for (var i = 0; i < self.barList.length; i++) {
-      self.barList()[i].marker.setVisible(true);
-    }
-
-
 
     } else {
 
@@ -109,28 +108,33 @@ var ViewModel = function() {
     id: i
 
     });
-
+    
+marker.addListener('click', function() {
+      toggleBounce(this);
+    });
 
     self.barList()[i].marker = marker;
-   
-   
-    
+
     markers.push(marker);
     bounds.extend(marker.position);
 
-    marker.addListener('click', function() {
-      populateInfoWindow(this, largeInfowindow);
+    
 
+    marker.addListener('click', function() {
+      
+      populateInfoWindow(this, largeInfowindow);
+      
     });
   }
-  
-    
-    //document.getElementById('show-listings').addEventListener('click', showListings);
-   // document.getElementById('hide-listings').addEventListener('click', hideListings);
-   // document.getElementById('zoom-to-area').addEventListener('click', function() {
-    //  zoomToArea();
-    //});
-    
+ 
+        function toggleBounce(marker) {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(function(){ marker.setAnimation(null); }, 750);
+        }
+      }
 
 function populateInfoWindow(marker, infowindow) {
   if (infowindow.marker != marker) {

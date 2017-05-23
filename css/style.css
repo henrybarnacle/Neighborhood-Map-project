@@ -2,6 +2,12 @@
   color: #fff;
   cursor: pointer;
 }
+.searchBox {
+text-align: center;
+align-self: center;
+width: 60%;
+margin: 20px;
+}
 #map,
 #wrapper,
 #page-content-wrapper {
