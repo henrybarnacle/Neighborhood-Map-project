@@ -1,8 +1,14 @@
 
+
+//gloabl variables
+
 var map;
 var markers = [];
 var client_id = 'QMJC2UXA51GWWTUQ2OA0KGBMV125UBDCS1QEGHI0PPJ23CXG';
 var client_secret = 'M534W1PKYXZZVKOWQIWE4ZV5XDGNN5XYRIK3LQB0YOYOTTKJ';
+
+// the model containing hard-coded data on the locations used, the rest of the data on these locations is pulled from the 
+// Foursquare API.
 
   var initialBars = [
    {title: 'Berry Park', location: {lat: 40.7224718, lng: -73.9552525}, venueId: '4a8e031cf964a520be1120e3'},
@@ -16,6 +22,8 @@ var client_secret = 'M534W1PKYXZZVKOWQIWE4ZV5XDGNN5XYRIK3LQB0YOYOTTKJ';
    {title: 'East River Bar', location: {lat: 40.7109477, lng: -73.96464999999999}, venueId: '40bfbb80f964a520d4001fe3'}
    ]
 
+// The view Item used to populate the list with bar titles, called by the viewmodel.
+
 
 var Bar = function(data) {
   this.title = ko.observable(data.title);
@@ -23,6 +31,8 @@ var Bar = function(data) {
   
 }
 
+// The viewmodel contains functions that create many of the DOM elements and pull data from the model for their use.
+// Utilizing knockout.js to update list items and map markers in real time with the filtering search box.
 
 var ViewModel = function() {
   var self = this;
@@ -78,12 +88,20 @@ var ViewModel = function() {
 
   });
 
-
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
   $("#menu-toggle").click(function(e) {
     e.preventDefault();
   $("#wrapper").toggleClass("toggled");
 
 });
+
+//gets the foursquare provided info from their Venue API
+//upon successful retrieval of venue data object, the chosen data is placed into the content string for each marker's infowindow.
+//failure to retrieve fousquare data results in an error alert being displayed.
 
 self.foursquare = function(venueId, marker) {
  
@@ -127,6 +145,8 @@ var settings = {
 $.ajax(settings);
 
 }
+
+//creates the map, centered around the markers
 
   map = new google.maps.Map(document.getElementById('map'),{
     center: {lat: 40.7613779, lng: -73.9346765},
@@ -505,6 +525,8 @@ $.ajax(settings);
 
    var bounds = new google.maps.LatLngBounds();
 
+//creating the markers and dropping them in place on page load
+
    for (var i = 0; i < initialBars.length; i++) {
 
     var position = initialBars[i].location;
@@ -527,6 +549,8 @@ $.ajax(settings);
     markers.push(marker);
     bounds.extend(marker.position);
 
+// Giving click functionality to markers. A click on a marker (or a simulated click from clicking a corresponding list
+// item) calls the foursquare function and boucnes the marker.
    
     marker.addListener('click', function() {
 
@@ -537,7 +561,9 @@ $.ajax(settings);
       
        });
   }
- 
+
+ // marker bounce function
+
         function toggleBounce(marker) {
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null);
@@ -546,6 +572,8 @@ $.ajax(settings);
           setTimeout(function(){ marker.setAnimation(null); }, 750);
         }
       }
+
+// fills infowindow, called upon successful retrieval of foursquare data
 
 function populateInfoWindow(marker, infowindow) {
   if (infowindow.marker != marker) {
@@ -559,6 +587,8 @@ function populateInfoWindow(marker, infowindow) {
     //});
   }
 }
+
+//drops the markers on to the map on page load
 
 function showListings() {
   var bounds = new google.maps.LatLngBounds();
@@ -575,7 +605,7 @@ showListings();
 
 }
 
- 
+ //starts the app on callback from google maps script in index.html 
 
 function initApp() {
 var viewModel = new ViewModel();

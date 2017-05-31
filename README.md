@@ -20,4 +20,7 @@ When opened, the info windows contain information from Foursquare's venue api ab
 currently the  name of location, whether location is currently open for business, an image, 
 approximate price and the address.
 
+Many resources were used to build this app, including 
+**startbootstrap.com,** **stack-overflow.com**, **Udacity courses on google maps api** and **responsive web design** and **Udacity student formums**, where the mentors were instrumental in assisting me!
+
 
