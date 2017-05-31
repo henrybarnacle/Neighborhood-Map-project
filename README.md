@@ -1,8 +1,7 @@
 # Neighborhood Map Project
 #### For Udacity Front-End Web Developer Nanodegree project 5
 
-## An app to display a map of a neighborhood, with markers for several locations and a 
-## side-menu with a list of those locations. 
+An app to display a map of a neighborhood, with markers for several locations and a side-menu with a list of those locations. 
 
 I have chosen **Williamsburg,** **Brooklyn** as the neighborhood and a happy-hour themed map 
 showing bars I regularly frequent. The app and map itsef is styled with
