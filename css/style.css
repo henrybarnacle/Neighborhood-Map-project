@@ -2,6 +2,9 @@
   color: #fff;
   cursor: pointer;
 }
+.foursquare {
+  text-align: center;
+}
 .searchBox {
 text-align: center;
 align-self: center;
@@ -136,6 +139,13 @@ margin: 20px;
   color: #fff;
   background: none;
 }
+.infoTitle {
+  font-size: 16px;
+  font-weight: bolder;
+}
+.address {
+  width: 175px;
+}
 @media(min-width:768px) {
   #wrapper {
     padding-left: 250px;
@@ -175,6 +185,13 @@ margin: 20px;
     font-size: 24px;
     padding: 20px;
     margin-left: 10px;
+}
+.infoTitle {
+  font-size: 16px;
+  font-weight: bolder;
+}
+.address {
+  width: 175px;
 }
 
 #zoom-to-area-text {
@@ -218,4 +235,4 @@ margin: 20px;
     text-align: left;   
 }
 
-
+}

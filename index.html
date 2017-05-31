@@ -16,13 +16,20 @@
 				<ul class="sidebar-nav" id="sidebar">
 					<li class="sidebar-brand">
 						<h1>Happy Hour</h1>
+
 					</li>
 				<hr>
 				<input class="searchBox" id="filter" data-bind="value: filter, valueUpdate: 'afterkeydown'"/>
 
 				  <ul id="bar-list" data-bind="foreach: barListMatch">
         <li class="white" data-bind="text: title, click: $parent.barClick" ></li>
+        
+
     </ul>
+    
+    <div class="foursquare">
+    	<h3> by Foursquare</h3>
+    </div>
 				
 			</div>
 
