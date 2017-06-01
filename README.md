@@ -3,6 +3,9 @@
 
 An app to display a map of a neighborhood, with markers for several locations and a side-menu with a list of those locations. 
 
+To run the app, the index.html file contained within the Neighborhood Map Project folder must be opened
+in your web browser, for example in Google Chrome - (File / Open File / Neighborhood Map Project / index.html).
+
 I have chosen **Williamsburg,** **Brooklyn** as the neighborhood and a happy-hour themed map 
 showing bars I regularly frequent. The app and map itsef is styled with
 a nightime theme to reflect this.
@@ -13,7 +16,7 @@ The build incorporates **bootstrap** for responsive design, **knockout.js**, **j
 API** and **Foursquare API**.
 
 The side-menu contains a search bar which filters the list item and markers by name.
-List items are clickable. Clicking on a lst item opens an info window for the relevant
+List items are clickable. Clicking on a list item opens an info window for the relevant
 marker (as does clicking on the marker itself).
 
 When opened, the info windows contain information from Foursquare's venue api about each location, 

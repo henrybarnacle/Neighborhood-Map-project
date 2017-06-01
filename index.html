@@ -1,60 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+<head>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content=" ">
-    <meta name="author" content=" ">
-    <link href="css/bootstrap.css" rel="stylesheet">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="" name="description">
+	<meta content="" name="author">
+	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
-   	<link href="css/style.css" rel="stylesheet">
-   		<title>map</title>
-	</head>
-		<body>
-		<div id="wrapper">
-			<div id="sidebar-wrapper">
-				<ul class="sidebar-nav" id="sidebar">
-					<li class="sidebar-brand">
-						<h1>Happy Hour</h1>
-
-					</li>
-				<hr>
-				<input class="searchBox" id="filter" data-bind="value: filter, valueUpdate: 'afterkeydown'"/>
-
-				  <ul id="bar-list" data-bind="foreach: barListMatch">
-        <li class="white" data-bind="text: title, click: $parent.barClick" ></li>
-        
-
-    </ul>
-    
-    <div class="foursquare">
-    	<h3> by Foursquare</h3>
-    </div>
-				
-			</div>
-
-		<div id="page-content-wrapper">
-		<div class="container-fluid">
+	<link href="css/style.css" rel="stylesheet">
+	<title>map</title>
+</head>
+<body>
+	<div id="wrapper">
+		<aside id="sidebar-wrapper">
+			<ul class="sidebar-nav" id="sidebar">
+				<li class="sidebar-brand">
+					<h1>Happy Hour</h1>
+				</li>
+				<li style="list-style: none; display: inline">
+					<hr>
+					<input class="search-box" data-bind="value: filter, valueUpdate: 'afterkeydown'" id="filter">
+					<ul data-bind="foreach: barListMatch" id="bar-list">
+						<li class="white" data-bind="text: title, click: $parent.barClick"></li>
+					</ul>
+					<div class="foursquare">
+						<h3>by Foursquare</h3>
+					</div>
+				</li>
+			</ul>
+		</aside>
+		<main id="page-content-wrapper">
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>
-						<a href="#menu-toggle" class="gradient-menu" id="menu-toggle"></a>Williamsburg
-						
-						</h1>
-					<div id="map"></div>
+						<h1><a class="gradient-menu" href="#menu-toggle" id="menu-toggle"></a>Williamsburg</h1>
+						<div id="map"></div>
 					</div>
 				</div>
-		</div>
-		</div>
-		</div>
-
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPO7PtQ8C7kkWclSEDaZSeRicyktYf2HY&libraries=drawing,geometry&callback=initApp">
+			</div>
+		</main>
+	</div>
+	<script src="js/jquery.min.js">
+	</script> 
+	<script src="js/knockout.js">
+	</script> 
+	<script src="js/oauth-signature.min.js">
+	</script> 
+	<script src="js/script.js">
 	</script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/knockout.js"></script>
-    <script src="js/oauth-signature.min.js"></script>
-    <script src="js/script.js"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script> 
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPO7PtQ8C7kkWclSEDaZSeRicyktYf2HY&libraries=drawing,geometry&callback=initApp" onerror="googleError()">
+	</script> 
 </body>
 </html>

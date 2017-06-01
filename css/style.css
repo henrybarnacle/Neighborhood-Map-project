@@ -5,20 +5,20 @@
 .foursquare {
   text-align: center;
 }
-.searchBox {
-text-align: center;
-align-self: center;
-width: 60%;
-margin: 20px;
+.search-box {
+  text-align: center;
+  align-self: center;
+  width: 60%;
+  margin: 20px;
 }
-#map,
-#wrapper,
+#map, 
+#wrapper, 
 #page-content-wrapper {
   height: 100%;
   width: 100%;
 }
-.container-fluid,
-.row,
+.container-fluid, 
+.row, 
 .col-md-12 {
   height: 100%;
   width: 100%;
@@ -41,13 +41,16 @@ margin: 20px;
   width: 1em;
   background: linear-gradient(to bottom, black, black 20%, white 20%, white 40%, black 40%, black 60%, white 60%, white 80%, black 80%, black 100%);
 }
+
 /* http://www.jqueryscript.net/demo/Bootstrap-Sidebar-Extension-With-jQuery-CSS-CSS3/ */
+
 
 /*!
  * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
+
 
 /* Toggle Styles */
 
@@ -57,8 +60,8 @@ margin: 20px;
 .nav-tabs {
   border-bottom: 0;
 }
-.nav-tabs>li.active>a,
-.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a, 
+.nav-tabs>li.active>a:focus, 
 .nav-tabs>li.active>a:hover {
   margin: 0;
   border-radius: 0;
@@ -87,7 +90,8 @@ margin: 20px;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
-#wrapper.toggled #sidebar-wrapper {
+#wrapper.toggled 
+#sidebar-wrapper {
   width: 250px;
 }
 #page-content-wrapper {
@@ -95,10 +99,12 @@ margin: 20px;
   position: absolute;
   padding: 15px;
 }
-#wrapper.toggled #page-content-wrapper {
+#wrapper.toggled 
+#page-content-wrapper {
   position: absolute;
   margin-right: -250px;
 }
+
 /* Sidebar Styles */
 
 .sidebar-nav {
@@ -123,19 +129,19 @@ margin: 20px;
   color: #fff;
   background: rgba(255, 255, 255, 0.2);
 }
-.sidebar-nav li a:active,
+.sidebar-nav li a:active, 
 .sidebar-nav li a:focus {
   text-decoration: none;
 }
-.sidebar-nav > .sidebar-brand {
+.sidebar-nav>.sidebar-brand {
   height: 65px;
   font-size: 18px;
   line-height: 60px;
 }
-.sidebar-nav > .sidebar-brand a {
+.sidebar-nav>.sidebar-brand a {
   color: #999999;
 }
-.sidebar-nav > .sidebar-brand a:hover {
+.sidebar-nav>.sidebar-brand a:hover {
   color: #fff;
   background: none;
 }
@@ -156,75 +162,68 @@ margin: 20px;
   #sidebar-wrapper {
     width: 250px;
   }
-  #wrapper.toggled #sidebar-wrapper {
+  #wrapper.toggled 
+  #sidebar-wrapper {
     width: 0;
   }
   #page-content-wrapper {
     padding: 20px;
     position: relative;
   }
-  #wrapper.toggled #page-content-wrapper {
+  #wrapper.toggled 
+  #page-content-wrapper {
     position: relative;
     margin-right: 0;
   }
-    html,
-    body {
-        height: 100%;
-        padding: 0;
-        margin: 0;
+  html, 
+  body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     font-weight: lighter;
-    }
-.text {
+  }
+  .text {
     font-size: 18px;
-}
-
-.title {
+  }
+  .title {
     text-align: center;
     font-size: 24px;
     padding: 20px;
     margin-left: 10px;
-}
-.infoTitle {
-  font-size: 16px;
-  font-weight: bolder;
-}
-.address {
-  width: 175px;
-}
-
-#zoom-to-area-text {
-        position: relative;
-        width: 60%;
-        
-
-}
-#search-within-time-text {
-    width: 84%;
-}
-.searchBox {
-text-align: center;
-align-self: center;
-width: 60%;
-margin: 20px;
-}
-
-#zoom-to-area {
-
-    width: 30%;
-}
-    #map {
-     height: 88%;   
-}
-
-.listings {
+  }
+  .infoTitle {
     font-size: 16px;
-}
-
-
-.options-box {
-  align-content: left;
+    font-weight: bolder;
+  }
+  .address {
+    width: 175px;
+  }
+  #zoom-to-area-text {
+    position: relative;
+    width: 60%;
+  }
+  #search-within-time-text {
+    width: 84%;
+  }
+  .searchBox {
+    text-align: center;
+    align-self: center;
+    width: 60%;
+    margin: 20px;
+  }
+  #zoom-to-area {
+    width: 30%;
+  }
+  #map {
+    height: 88%;
+  }
+  .listings {
+    font-size: 16px;
+  }
+  .options-box {
+    align-content: left;
     float: left;
     width: 20%;
     font-size: 14px;
@@ -232,7 +231,6 @@ margin: 20px;
     height: 100%;
     line-height: 35px;
     padding: 10px;
-    text-align: left;   
-}
-
+    text-align: left;
+  }
 }
